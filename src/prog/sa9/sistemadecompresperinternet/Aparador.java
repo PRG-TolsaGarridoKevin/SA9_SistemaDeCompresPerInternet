@@ -7,6 +7,7 @@ public abstract class Aparador {
     private static final int LIMITE = 20;
 
     protected boolean aparadorActiu;
+    protected int diesRestantsPerTancar;
     private String nom;
     private TipusMarca marca;
     protected ArrayList<StockProducte> stock = new ArrayList<>();
