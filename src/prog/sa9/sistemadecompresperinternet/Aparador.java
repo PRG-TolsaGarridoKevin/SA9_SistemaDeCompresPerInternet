@@ -13,6 +13,9 @@ public abstract class Aparador {
     protected ArrayList<StockProducte> stock = new ArrayList<>();
 
     public Aparador(String nom, TipusMarca marca) {
+        assert nom != null && !nom.isEmpty() : "El nom no pot ser null";
+        assert marca != null : "La marca no pot ser null";
+        
         this.nom = nom;
         this.marca = marca;
         this.aparadorActiu = true;
@@ -27,12 +30,16 @@ public abstract class Aparador {
     }
 
     public void obtindreProductesALaVenta() {
+        assert stock != null : "El stock no pot ser null";
+         
         for (StockProducte Producte : stock) {
             System.out.println(Producte);
         }
     }
 
     public boolean verSiUnProductoYaExiste(Producte producte) {
+        assert producte != null : "El producte no pot ser null";
+        
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().getId().equals(producte.getId())) {
                 return true;
@@ -42,6 +49,8 @@ public abstract class Aparador {
     }
     
     public boolean comprobarStockDeProducte(Producte producte) {
+        assert producte != null : "El producte no pot ser null";
+        
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().equals(producte) && Producte.getNumeroDeProductesDisponibles() > 0) {
                 return true;
@@ -56,6 +65,7 @@ public abstract class Aparador {
         for (StockProducte producte : stock) {
             productes.add(producte.getProducteRelacionat());
         }
+        assert productes.stream().allMatch(producte -> producte != null) : "Hi ha productes nulls en la llista";
         productes.sort(null);
         for (Producte producte : productes) {
             System.out.println(producte);
@@ -63,6 +73,8 @@ public abstract class Aparador {
     }
     
     public int obtenerUnidadesDisponibles(Producte producte) {
+        assert producte != null : "El producte no pot ser null";
+        
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().equals(producte)) {
                 return Producte.getNumeroDeProductesDisponibles();
@@ -72,10 +84,14 @@ public abstract class Aparador {
     }
     
     public static boolean aparadorObert(Aparador aparador) {
+        assert aparador != null : "El aparador no pot ser null";
         return aparador.aparadorActiu;
     }
     
     public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException, ShowRoomNotOpenException {
+        assert idProducte != null && !idProducte.isEmpty() : "El id del producte no pot ser null";
+        assert quantitat > 0 : "La quantitat ha de ser major que zero";
+        
         if (!this.aparadorActiu) {
             System.out.println("L'aparador esta tancat, no es poden fer compres");
             return false;
@@ -100,6 +116,8 @@ public abstract class Aparador {
     }
 
     public boolean afegirProducte(StockProducte Producte) throws CanNotMergeBrandsException {
+        assert Producte != null : "El producte a afegir no pot ser null";
+
         if (stock.size() >= LIMITE) {
             System.out.println("L'aparador ja te el limit de 20 productes diferents");
             return false;
