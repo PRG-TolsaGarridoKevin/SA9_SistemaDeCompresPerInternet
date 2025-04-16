@@ -3,18 +3,17 @@ package prog.sa9.sistemadecompresperinternet;
 import java.util.Random;
 
 public class StockProducte {
-    private static final int MAX_RANDOM_UNITS = 10;
-    Random random = new Random();
+     private static final int MAX_RANDOM_UNITS = 10;  
+    private static final int MIN_RANDOM_UNITS = 1;  
+    private Random random = new Random();
     
     private int numeroDeProductesDisponibles;
     private Producte producteRelacionat;
     
-    public StockProducte(int numeroDeProductesDisponibles, Producte producteRelacionat) {
+    public StockProducte(Producte producteRelacionat) {
         assert producteRelacionat != null : "El producte no pot ser null";
-        assert numeroDeProductesDisponibles >= 0 : "Les unitats no poden ser negatives";
-        assert this.numeroDeProductesDisponibles > 0 && this.numeroDeProductesDisponibles <= MAX_RANDOM_UNITS : "Numero aleatori de productes fora del rang esperat (1-10)";
-        
-        this.numeroDeProductesDisponibles = random.nextInt(MAX_RANDOM_UNITS) + 1;
+
+        this.numeroDeProductesDisponibles = random.nextInt(MAX_RANDOM_UNITS - MIN_RANDOM_UNITS + 1) + MIN_RANDOM_UNITS;
         this.producteRelacionat = producteRelacionat;
     }
     

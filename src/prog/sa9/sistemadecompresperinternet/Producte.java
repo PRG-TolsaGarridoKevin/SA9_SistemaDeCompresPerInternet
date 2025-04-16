@@ -2,50 +2,54 @@ package prog.sa9.sistemadecompresperinternet;
 
 import java.util.Objects;
 
-public class Producte implements Comparable<Producte>{
+public class Producte implements Comparable<Producte> {
     private String id;
     private double preu;
     private TipusMarca marca;
-    private StockProducte stockProducte;
+    private StockProducte stockProducte;  // Añadido para almacenar el stock del producto
 
-    public Producte(String id, double preu, TipusMarca marca, StockProducte stockProducte) {
+    public Producte(String id, double preu, TipusMarca marca) {
         this.id = id;
         this.preu = preu;
         this.marca = marca;
+        this.stockProducte = null;  // Inicialmente no tiene stock
+    }
+
+    // Método para asociar un stock con el producto
+    public void setStockProducte(StockProducte stockProducte) {
         this.stockProducte = stockProducte;
     }
-    
+
+    public int getStockProducte() {
+        // Comprobamos si el stock es nulo. Si no lo es, devolvemos las unidades.
+        if (this.stockProducte != null) {
+            return this.stockProducte.getNumeroDeProductesDisponibles();
+        }
+        return 0;  // Si el producto no tiene stock, devolvemos 0
+    }
+
     @Override
     public int compareTo(Producte producte) {
-        return this.id.compareTo(producte.id); 
+        return this.id.compareTo(producte.id);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Producte other = (Producte) obj;
-        return Objects.equals(this.id, other.id);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Producte producte = (Producte) obj;
+        return id.equals(producte.id);
     }
-    
+
     public void setPreu(double preu) {
         this.preu = preu;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -53,11 +57,10 @@ public class Producte implements Comparable<Producte>{
     public TipusMarca getMarca() {
         return marca;
     }
+
     @Override
     public String toString() {
-        return "Producte amb id: "+id+", Preu: "+preu+", Marca: "+ marca+", Unitats: "+ stockProducte.getNumeroDeProductesDisponibles()+"\n";
+        // Usamos el método getStockProducte para obtener las unidades
+        return "Producte amb id: " + id + ", Preu: " + preu + ", Marca: " + marca + ", Unitats: " + getStockProducte();
     }
-
-    
-    
 }
