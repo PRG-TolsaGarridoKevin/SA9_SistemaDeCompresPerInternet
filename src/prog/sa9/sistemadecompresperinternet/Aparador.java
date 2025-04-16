@@ -14,6 +14,8 @@ public abstract class Aparador {
         this.marca = marca;
     }
     
+    //Cambiar nombres de metodos a unos mas legibles y simplificados
+    
     public void ObtindreProductesALaVenta(){
         for (StockProducte Producte : stock) {
             System.out.println(Producte);
@@ -29,9 +31,13 @@ public abstract class Aparador {
         return false;
     };
     
-    public static boolean BuscarUnProducto(){
-    return false;
-        //consultar si queda 1 o mas unidades de 1 producto
+    public boolean ComprobarStockDeProducte(Producte producte){
+        for (StockProducte Producte : stock) {
+            if (Producte.getProducteRelacionat().equals(producte) && Producte.getNumeroDeProductesDisponibles() > 0) {
+                return true;
+            }
+        }
+        return false;
     };
     
     
@@ -39,9 +45,13 @@ public abstract class Aparador {
         //obligado usar interfaz Comparable en clase producte
     };
     
-    public static int ObtenerUnidadesDisponibles(){
-    return -1;
-        //obtener las unidades disponibles de un producto
+    public int ObtenerUnidadesDisponibles(Producte producte){
+        for (StockProducte Producte : stock) {
+            if (Producte.getProducteRelacionat().equals(producte)) {
+                return Producte.getNumeroDeProductesDisponibles();
+            }
+        }
+    return 0;
     };
     
     public static boolean SaberSiElAparadorEstaObert(){
