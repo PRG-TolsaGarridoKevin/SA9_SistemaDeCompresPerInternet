@@ -6,11 +6,13 @@ public class Producte {
     private String id;
     private double preu;
     private TipusMarca marca;
+    private StockProducte stockProducte;
 
-    public Producte(String id, double preu, TipusMarca marca) {
+    public Producte(String id, double preu, TipusMarca marca, StockProducte stockProducte) {
         this.id = id;
         this.preu = preu;
         this.marca = marca;
+        this.stockProducte = stockProducte;
     }
 
     @Override
@@ -39,5 +41,11 @@ public class Producte {
         this.preu = preu;
     }
 
+    @Override
+    public String toString() {
+        return "Producte amb id: "+id+", Preu: "+preu+", Marca: "+ marca+", Unitats: "+ stockProducte.getNumeroDeProductesDisponibles()+"\n";
+    }
+
+    
     
 }
