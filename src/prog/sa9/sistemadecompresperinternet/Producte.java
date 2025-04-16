@@ -45,6 +45,9 @@ public class Producte {
         return id;
     }
 
+    public TipusMarca getMarca() {
+        return marca;
+    }
     @Override
     public String toString() {
         return "Producte amb id: "+id+", Preu: "+preu+", Marca: "+ marca+", Unitats: "+ stockProducte.getNumeroDeProductesDisponibles()+"\n";

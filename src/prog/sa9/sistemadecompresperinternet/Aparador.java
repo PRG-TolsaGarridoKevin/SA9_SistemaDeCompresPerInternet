@@ -3,8 +3,9 @@ package prog.sa9.sistemadecompresperinternet;
 import java.util.ArrayList;
 
 public abstract class Aparador {
+
     private static final int LIMITE = 20;
-    
+
     private boolean aparadorActiu;
     private String nom;
     private TipusMarca marca;
@@ -23,76 +24,108 @@ public abstract class Aparador {
     public void tancarAparador() {
         this.aparadorActiu = false;
     }
-    
+
     //Cambiar nombres de metodos a unos mas legibles y simplificados
-    
-    public void ObtindreProductesALaVenta(){
+    public void ObtindreProductesALaVenta() {
         for (StockProducte Producte : stock) {
             System.out.println(Producte);
         }
-    };
+    }
+
+    ;
     
-    public boolean VerSiUnProductoYaExiste(Producte producte){
+    public boolean VerSiUnProductoYaExiste(Producte producte) {
         for (StockProducte Producte : stock) {
-            if (Producte.getProducteRelacionat().equals(producte)) {
+            if (Producte.getProducteRelacionat().getId().equals(producte.getId())) {
                 return true;
             }
         }
         return false;
-    };
+    }
+
+    ;
     
-    public boolean ComprobarStockDeProducte(Producte producte){
+    public boolean ComprobarStockDeProducte(Producte producte) {
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().equals(producte) && Producte.getNumeroDeProductesDisponibles() > 0) {
                 return true;
             }
         }
         return false;
-    };
+    }
+
+    ;
     
     
-    public static void VerProductosEnVentaOrdenadosAlfabeticamente(){
+    public static void VerProductosEnVentaOrdenadosAlfabeticamente() {
         //obligado usar interfaz Comparable en clase producte
-    };
+    }
+
+    ;
     
-    public int ObtenerUnidadesDisponibles(Producte producte){
+    public int ObtenerUnidadesDisponibles(Producte producte) {
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().equals(producte)) {
                 return Producte.getNumeroDeProductesDisponibles();
             }
         }
-    return 0;
-    };
+        return 0;
+    }
+
+    ;
     
-    public static boolean SaberSiElAparadorEstaObert(Aparador aparador){
+    public static boolean SaberSiElAparadorEstaObert(Aparador aparador) {
         return aparador.aparadorActiu;
-    };
+    }
+
+    ;
     
     public boolean ComprarProducte(String idProducte, int quantitat) {
-    if (!this.aparadorActiu) {
-        System.out.println("L'aparador esta tancat, no es poden fer compres");
+        if (!this.aparadorActiu) {
+            System.out.println("L'aparador esta tancat, no es poden fer compres");
+            return false;
+        }
+
+        for (StockProducte Producte : stock) {
+            Producte producteComprat = Producte.getProducteRelacionat();
+
+            if (producteComprat.getId().equals(idProducte)) {
+                if (Producte.getNumeroDeProductesDisponibles() >= quantitat) {
+                    Producte.restarNumeroUnitats(quantitat);
+                    System.out.println("Compra realitzada: " + quantitat + " unitats del producte " + idProducte);
+                    return true;
+                } else {
+                    System.out.println("No hi ha prou unitats disponibles del producte selleccionat");
+                    return false;
+                }
+            }
+        }
+
+        System.out.println("Producte no trobat en el aparador");
         return false;
     }
 
-    for (StockProducte Producte : stock) {
-        Producte producteComprat = Producte.getProducteRelacionat();
-        
-        if (producteComprat.getId().equals(idProducte)) {
-            if (Producte.getNumeroDeProductesDisponibles() >= quantitat) {
-                Producte.restarNumeroUnitats(quantitat);
-                System.out.println("Compra realitzada: " + quantitat + " unitats del producte " + idProducte);
-                return true;
-            } else {
-                System.out.println("No hi ha prou unitats disponibles del producte selleccionat");
-                return false;
-            }
+    public boolean afegirProducte(StockProducte Producte) {
+        if (stock.size() >= LIMITE) {
+            System.out.println("L'aparador ja te el limit de 20 productes diferents");
+            return false;
         }
+
+        if (!Producte.getProducteRelacionat().getMarca().equals(this.marca)) {
+            System.out.println("El producte no es de la mateixa marca que l'aparador");
+            return false;
+        }
+        
+        if (VerSiUnProductoYaExiste(Producte.getProducteRelacionat())) {
+            System.out.println("El producte ja existeix en l'aparador.");
+            return false;
+        }
+        
+        
+        stock.add(Producte);
+        System.out.println("Producte afegit: " + Producte.getProducteRelacionat().getId());
+        return true;
     }
 
-    System.out.println("Producte no trobat en el aparador");
-    return false;
-}
-    
-    //max 20 productos diferentes
     //Excepcion = NotExistEnouhtItemException = No hay suficiente stock del producto
 }
