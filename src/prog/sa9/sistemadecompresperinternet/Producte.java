@@ -6,26 +6,25 @@ public class Producte implements Comparable<Producte> {
     private String id;
     private double preu;
     private TipusMarca marca;
-    private StockProducte stockProducte;  // Añadido para almacenar el stock del producto
+    private StockProducte stockProducte;  
 
     public Producte(String id, double preu, TipusMarca marca) {
         this.id = id;
         this.preu = preu;
         this.marca = marca;
-        this.stockProducte = null;  // Inicialmente no tiene stock
+        this.stockProducte = null;  
     }
 
-    // Método para asociar un stock con el producto
     public void setStockProducte(StockProducte stockProducte) {
         this.stockProducte = stockProducte;
     }
 
     public int getStockProducte() {
-        // Comprobamos si el stock es nulo. Si no lo es, devolvemos las unidades.
+        
         if (this.stockProducte != null) {
             return this.stockProducte.getNumeroDeProductesDisponibles();
         }
-        return 0;  // Si el producto no tiene stock, devolvemos 0
+        return 0; 
     }
 
     @Override
@@ -60,7 +59,7 @@ public class Producte implements Comparable<Producte> {
 
     @Override
     public String toString() {
-        // Usamos el método getStockProducte para obtener las unidades
+      
         return "Producte amb id: " + id + ", Preu: " + preu + ", Marca: " + marca + ", Unitats: " + getStockProducte();
     }
 }

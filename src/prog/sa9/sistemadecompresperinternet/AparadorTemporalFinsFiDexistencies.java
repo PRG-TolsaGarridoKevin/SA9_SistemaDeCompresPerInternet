@@ -15,9 +15,9 @@ public class AparadorTemporalFinsFiDexistencies extends Aparador{
         return (int) (tempsTranscorregut / (1000 * 60 * 60 * 24));
     }
 
-    private boolean quedaStock() {
-        for (StockProducte Producte : getStock()) {
-            if (Producte.getNumeroDeProductesDisponibles() > 0) {
+    private boolean hayProductosEnStock() {
+        for (StockProducte stockProducte : stock) {
+            if (stockProducte.getNumeroDeProductesDisponibles() > 0) {
                 return true;
             }
         }
@@ -25,19 +25,41 @@ public class AparadorTemporalFinsFiDexistencies extends Aparador{
     }
 
     public void verificarEstat() {
-        if (obtenirDiesTranscorreguts() >= MAX_DIES_OBERTS || !quedaStock()) {
-            this.tancarAparador();
-        }
+    if (obtenirDiesTranscorreguts() >= MAX_DIES_OBERTS || !hayProductosEnStock()) {
+        this.tancarAparador();
+        System.out.println("El aparador ha tancat automaticament per temps o falta d'estoc");
     }
+}
 
     @Override
     public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException, ShowRoomNotOpenException {
-        verificarEstat();
+    assert idProducte != null && !idProducte.isEmpty() : "El id del producte no pot ser null";
+    assert quantitat > 0 : "La quantitat ha de ser major que zero";
 
-        if (!isAparadorActiu()) {
-            throw new ShowRoomNotOpenException("No es pot comprar, l'aparador esta tancat");
-        }
-
-        return super.comprarProducte(idProducte, quantitat);
+    if (!this.aparadorActiu) {
+        throw new ShowRoomNotOpenException("L'aparador està tancat, no es poden fer compres");
     }
+
+    for (StockProducte productes : stock) {
+        Producte producteComprat = productes.getProducteRelacionat();
+
+        if (producteComprat.getId().equals(idProducte)) {
+            if (productes.getNumeroDeProductesDisponibles() >= quantitat) {
+                productes.restarNumeroUnitats(quantitat);
+                System.out.println("Compra realitzada: " + quantitat + " unitats del producte " + idProducte);
+
+                if (!hayProductosEnStock()) {
+                    this.tancarAparador();
+                    System.out.println("Tots els productes estan agotats, el aparador s'ha tancat automaticament.");
+                }
+
+                return true;
+            } else {
+                throw new NotExistEnoughItemException("No hi ha prou unitats disponibles del producte seleccionat");
+            }
+        }
+    }
+
+    return false;
+}
 }

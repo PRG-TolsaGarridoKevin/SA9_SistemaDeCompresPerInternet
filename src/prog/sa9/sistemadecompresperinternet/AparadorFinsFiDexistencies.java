@@ -25,7 +25,7 @@ public class AparadorFinsFiDexistencies extends Aparador {
     }
     
     @Override
-public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException, ShowRoomNotOpenException {
+    public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException, ShowRoomNotOpenException {
     assert idProducte != null && !idProducte.isEmpty() : "El id del producte no pot ser null";
     assert quantitat > 0 : "La quantitat ha de ser major que zero";
 
