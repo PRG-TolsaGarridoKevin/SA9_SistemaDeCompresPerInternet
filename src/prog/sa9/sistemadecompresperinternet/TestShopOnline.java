@@ -38,5 +38,18 @@ public class TestShopOnline {
         System.out.println("\n----Consultar que el aparador esta obert----");
         System.out.println(aparadorTemp1.isAparadorActiu());
         
+        System.out.println("\n*----------Prueba de un nuevo Aparador (Aparador fins fi de existencies)----------*");
+        
+        AparadorFinsFiDexistencies AparadorFiExistencies = new AparadorFinsFiDexistencies("Estiu LaCostera 2025 dos", TipusMarca.LACOSTERA);
+        System.out.println("------Comprobando productos a la venta------");
+        AparadorFiExistencies.obtindreProductesALaVenta();
+        AparadorFiExistencies.afegirProducte(stockPolRatlles);
+        AparadorFiExistencies.obtindreProductesALaVenta();
+        System.out.println("El aparador esta obert? --> "+AparadorFiExistencies.isAparadorActiu());
+        
+        AparadorFiExistencies.comprarProducte("Pol ratlles", stockPolRatlles.getNumeroDeProductesDisponibles());
+        System.out.println("El aparador esta obert? --> "+AparadorFiExistencies.isAparadorActiu());
+        
+        System.out.println("\n*----------Prueba de un nuevo Aparador (Aparador fins fi de existencies y temps)----------*");
     }
 }

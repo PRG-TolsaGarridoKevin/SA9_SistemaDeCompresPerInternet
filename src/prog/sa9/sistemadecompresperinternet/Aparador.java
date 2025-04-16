@@ -31,6 +31,9 @@ public abstract class Aparador {
 
     public void obtindreProductesALaVenta() {
         assert stock != null : "El stock no pot ser null";
+        if (stock.isEmpty()) {
+            System.out.println("El aparador no te productes a la venta");
+        }
         for (StockProducte productes : stock) {
             System.out.println(productes.getProducteRelacionat());
         }
