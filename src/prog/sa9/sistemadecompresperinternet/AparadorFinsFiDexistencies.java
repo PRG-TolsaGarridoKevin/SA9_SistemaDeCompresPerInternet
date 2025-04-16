@@ -5,5 +5,28 @@ public class AparadorFinsFiDexistencies extends Aparador {
         super(nom, marca);
     }
     
-    //Aparador fins a fi d'esxistencies = esta obert soles si te produstes en stock, la marca pot tancaro cuan decidisca.
+    @Override
+    public void obrirAparador() {
+        if (hayProductosEnStock()) {
+            super.obrirAparador();  
+            System.out.println("L'aparador s'ha obert");
+        } else {
+            System.out.println("No hi ha productes en estoc, no es pot obrir l'aparador");
+        }
+    }
+
+    private boolean hayProductosEnStock() {
+        for (StockProducte stockProducte : stock) {
+            if (stockProducte.getNumeroDeProductesDisponibles() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public void tancarAparador() {
+        super.aparadorActiu = false;
+        System.out.println("L'aparador s'ha tancat");
+    }
 }

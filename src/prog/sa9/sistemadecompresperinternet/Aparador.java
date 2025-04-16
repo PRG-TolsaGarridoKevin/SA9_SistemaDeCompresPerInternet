@@ -6,10 +6,10 @@ public abstract class Aparador {
 
     private static final int LIMITE = 20;
 
-    private boolean aparadorActiu;
+    protected boolean aparadorActiu;
     private String nom;
     private TipusMarca marca;
-    private ArrayList<StockProducte> stock = new ArrayList<>();
+    protected ArrayList<StockProducte> stock = new ArrayList<>();
 
     public Aparador(String nom, TipusMarca marca) {
         this.nom = nom;
