@@ -50,9 +50,16 @@ public abstract class Aparador {
         return false;
     }
     
-    
-    public static void verProductosEnVentaOrdenadosAlfabeticamente() {
-        //obligado usar interfaz Comparable en clase producte
+    public void verProductosEnVentaOrdenadosAlfabeticamente() {
+        ArrayList<Producte> productes = new ArrayList<>();
+
+        for (StockProducte producte : stock) {
+            productes.add(producte.getProducteRelacionat());
+        }
+        productes.sort(null);
+        for (Producte producte : productes) {
+            System.out.println(producte);
+        }
     }
     
     public int obtenerUnidadesDisponibles(Producte producte) {

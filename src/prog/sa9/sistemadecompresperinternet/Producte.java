@@ -2,7 +2,7 @@ package prog.sa9.sistemadecompresperinternet;
 
 import java.util.Objects;
 
-public class Producte {
+public class Producte implements Comparable<Producte>{
     private String id;
     private double preu;
     private TipusMarca marca;
@@ -13,6 +13,11 @@ public class Producte {
         this.preu = preu;
         this.marca = marca;
         this.stockProducte = stockProducte;
+    }
+    
+    @Override
+    public int compareTo(Producte producte) {
+        return this.id.compareTo(producte.id); 
     }
 
     @Override
