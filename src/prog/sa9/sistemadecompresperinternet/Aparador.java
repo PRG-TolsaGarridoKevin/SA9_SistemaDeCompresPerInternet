@@ -80,7 +80,7 @@ public abstract class Aparador {
 
     ;
     
-    public boolean ComprarProducte(String idProducte, int quantitat) {
+    public boolean ComprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException {
         if (!this.aparadorActiu) {
             System.out.println("L'aparador esta tancat, no es poden fer compres");
             return false;
@@ -95,8 +95,7 @@ public abstract class Aparador {
                     System.out.println("Compra realitzada: " + quantitat + " unitats del producte " + idProducte);
                     return true;
                 } else {
-                    System.out.println("No hi ha prou unitats disponibles del producte selleccionat");
-                    return false;
+                    throw new NotExistEnoughItemException("No hi ha prou unitats disponibles del producte seleccionat");
                 }
             }
         }
@@ -126,6 +125,4 @@ public abstract class Aparador {
         System.out.println("Producte afegit: " + Producte.getProducteRelacionat().getId());
         return true;
     }
-
-    //Excepcion = NotExistEnouhtItemException = No hay suficiente stock del producto
 }
