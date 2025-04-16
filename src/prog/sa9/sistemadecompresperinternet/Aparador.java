@@ -68,7 +68,7 @@ public abstract class Aparador {
         return aparador.aparadorActiu;
     }
     
-    public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException {
+    public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException, ShowRoomNotOpenException {
         if (!this.aparadorActiu) {
             System.out.println("L'aparador esta tancat, no es poden fer compres");
             return false;
@@ -111,5 +111,13 @@ public abstract class Aparador {
         stock.add(Producte);
         System.out.println("Producte afegit: " + Producte.getProducteRelacionat().getId());
         return true;
+    }
+    
+    protected ArrayList<StockProducte> getStock() {
+        return stock;
+    }
+    
+    protected boolean isAparadorActiu() {
+        return aparadorActiu;
     }
 }
