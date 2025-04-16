@@ -27,15 +27,5 @@ public class StockProducte {
     public Producte getProducteRelacionat() {
         return producteRelacionat;
     }
-
-    
-    
-/*
-Excepcion, CanNotMergeBrandsException = cuando un producto no encaja con la marca del aparador
-*/
-
-  
-    
-
-   
+ 
 }

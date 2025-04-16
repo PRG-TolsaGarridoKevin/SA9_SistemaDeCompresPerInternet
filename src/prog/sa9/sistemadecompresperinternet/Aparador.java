@@ -25,16 +25,13 @@ public abstract class Aparador {
         this.aparadorActiu = false;
     }
 
-    //Cambiar nombres de metodos a unos mas legibles y simplificados
-    public void ObtindreProductesALaVenta() {
+    public void obtindreProductesALaVenta() {
         for (StockProducte Producte : stock) {
             System.out.println(Producte);
         }
     }
 
-    ;
-    
-    public boolean VerSiUnProductoYaExiste(Producte producte) {
+    public boolean verSiUnProductoYaExiste(Producte producte) {
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().getId().equals(producte.getId())) {
                 return true;
@@ -42,10 +39,8 @@ public abstract class Aparador {
         }
         return false;
     }
-
-    ;
     
-    public boolean ComprobarStockDeProducte(Producte producte) {
+    public boolean comprobarStockDeProducte(Producte producte) {
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().equals(producte) && Producte.getNumeroDeProductesDisponibles() > 0) {
                 return true;
@@ -53,17 +48,13 @@ public abstract class Aparador {
         }
         return false;
     }
-
-    ;
     
     
-    public static void VerProductosEnVentaOrdenadosAlfabeticamente() {
+    public static void verProductosEnVentaOrdenadosAlfabeticamente() {
         //obligado usar interfaz Comparable en clase producte
     }
-
-    ;
     
-    public int ObtenerUnidadesDisponibles(Producte producte) {
+    public int obtenerUnidadesDisponibles(Producte producte) {
         for (StockProducte Producte : stock) {
             if (Producte.getProducteRelacionat().equals(producte)) {
                 return Producte.getNumeroDeProductesDisponibles();
@@ -71,16 +62,12 @@ public abstract class Aparador {
         }
         return 0;
     }
-
-    ;
     
-    public static boolean SaberSiElAparadorEstaObert(Aparador aparador) {
+    public static boolean aparadorObert(Aparador aparador) {
         return aparador.aparadorActiu;
     }
-
-    ;
     
-    public boolean ComprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException {
+    public boolean comprarProducte(String idProducte, int quantitat) throws NotExistEnoughItemException {
         if (!this.aparadorActiu) {
             System.out.println("L'aparador esta tancat, no es poden fer compres");
             return false;
@@ -104,18 +91,17 @@ public abstract class Aparador {
         return false;
     }
 
-    public boolean afegirProducte(StockProducte Producte) {
+    public boolean afegirProducte(StockProducte Producte) throws CanNotMergeBrandsException {
         if (stock.size() >= LIMITE) {
             System.out.println("L'aparador ja te el limit de 20 productes diferents");
             return false;
         }
 
         if (!Producte.getProducteRelacionat().getMarca().equals(this.marca)) {
-            System.out.println("El producte no es de la mateixa marca que l'aparador");
-            return false;
+            throw new CanNotMergeBrandsException("El producte no es de la mateixa marca que l'aparador");
         }
         
-        if (VerSiUnProductoYaExiste(Producte.getProducteRelacionat())) {
+        if (verSiUnProductoYaExiste(Producte.getProducteRelacionat())) {
             System.out.println("El producte ja existeix en l'aparador.");
             return false;
         }
