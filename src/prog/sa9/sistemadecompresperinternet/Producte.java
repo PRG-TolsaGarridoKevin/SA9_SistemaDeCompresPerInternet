@@ -40,6 +40,10 @@ public class Producte {
     public void setPreu(double preu) {
         this.preu = preu;
     }
+    
+    public String getId() {
+        return id;
+    }
 
     @Override
     public String toString() {
